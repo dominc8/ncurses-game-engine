@@ -11,5 +11,6 @@ add_executable(FlappyBird main.cpp NcursesGameEngine.cpp flappy-bird/FlappyBird.
 target_compile_definitions(FlappyBird PRIVATE FLAPPY_BIRD)
 target_link_libraries(FlappyBird ncurses)
 
-
-
+add_executable(MazeGenerator main.cpp NcursesGameEngine.cpp maze-generator/MazeGenerator.cpp)
+target_compile_definitions(MazeGenerator PRIVATE MAZE_GENERATOR)
+target_link_libraries(MazeGenerator ncurses)
