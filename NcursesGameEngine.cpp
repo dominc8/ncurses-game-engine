@@ -47,6 +47,10 @@ void NcursesGameEngine::start() {
     if (!onUserCreate()) {
         return;
     }
+    for(int i = 0; i < getWindowHeight(); ++i) {
+        mvadd_wchnstr(i,0, &screen_buffer_[i*getWindowWidth()], getWindowWidth());
+    }
+    move(getWindowHeight(), 0);
     refresh();
     std::chrono::system_clock::time_point time_point1, time_point2;
     time_point1 = std::chrono::system_clock::now();

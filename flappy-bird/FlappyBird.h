@@ -7,12 +7,13 @@
 
 #include <utility>
 #include <vector>
+#include <random>
 #include "../NcursesGameEngine.h"
 
 class FlappyBird : public NcursesGameEngine{
 public:
     FlappyBird(int window_width, int window_height);
-    ~FlappyBird() override;
+    ~FlappyBird() override = default;
 
     bool onUserCreate() override;
     bool onUserUpdate(float elapsed_time) override;
@@ -27,6 +28,8 @@ private:
     int gap_inside_obstacle_;
     float horizontal_cycle_;
     bool game_lost_;
+    std::default_random_engine random_engine_;
+    std::uniform_int_distribution<int> distribution_;
 };
 
 

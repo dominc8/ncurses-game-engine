@@ -2,8 +2,6 @@
 // Created by dominik on 09.07.2019.
 //
 
-#include <ctime>
-#include <cstdlib>
 #include <vector>
 #include "MazeGenerator.h"
 
@@ -23,7 +21,8 @@ MazeGenerator::~MazeGenerator() {
 }
 
 bool MazeGenerator::onUserCreate() {
-    srand(time(NULL));
+    std::random_device rd;
+    random_engine_ = std::default_random_engine(rd());
 
     for (int i = 0; i < maze_width_ * maze_height_; ++i) {
         cells[i].is_visited_    = false;
@@ -92,7 +91,8 @@ bool MazeGenerator::onUserUpdate(float elapsed_time) {
             }
 
             if (!possible_neighbours.empty()) {
-                auto neighbour = possible_neighbours[rand() % possible_neighbours.size()];
+                distribution_ = std::uniform_int_distribution<int> (0, possible_neighbours.size() - 1);
+                auto neighbour = possible_neighbours[distribution_(random_engine_)];
                 backtrack_stack_.push(current_cell_index_);
                 visited_cells_counter_++;
                 switch (neighbour) {

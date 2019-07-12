@@ -10,7 +10,7 @@
 class SimpleKeyboardExample : public NcursesGameEngine {
 public:
     SimpleKeyboardExample(int window_width, int window_height);
-    ~SimpleKeyboardExample() override {};
+    ~SimpleKeyboardExample() override  = default;
 
     bool onUserCreate() override;
     bool onUserUpdate(float elapsed_time) override;

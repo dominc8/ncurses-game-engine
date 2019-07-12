@@ -7,6 +7,7 @@
 
 #include "../NcursesGameEngine.h"
 #include <stack>
+#include <random>
 
 enum Neighbour {
     NORTH = 0,
@@ -18,7 +19,7 @@ enum Neighbour {
 class MazeGenerator : public NcursesGameEngine{
 public:
     MazeGenerator(int maze_width, int maze_height);
-    virtual ~MazeGenerator() override;
+    ~MazeGenerator() override;
 
 protected:
     bool onUserCreate() override;
@@ -36,6 +37,8 @@ private:
     int current_cell_index_;
     int visited_cells_counter_;
     std::stack<int> backtrack_stack_;
+    std::default_random_engine random_engine_;
+    std::uniform_int_distribution<int> distribution_;
 };
 
 

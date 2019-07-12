@@ -43,8 +43,8 @@ protected:
     virtual bool onUserCreate() = 0;
     virtual bool onUserUpdate(float elapsed_time) = 0;
 
-    inline const int getWindowWidth() const { return window_width_; };
-    inline const int getWindowHeight() const { return window_height_; };
+    inline int getWindowWidth() const { return window_width_; };
+    inline int getWindowHeight() const { return window_height_; };
 
     cchar_t *screen_buffer_;
     bool key_states_[kKeyStatesCount];

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(NcursesGameEngine)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 add_executable(SimpleKeyboardExample main.cpp NcursesGameEngine.cpp simple-keyboard-example/SimpleKeyboardExample.cpp)
 target_compile_definitions(SimpleKeyboardExample PRIVATE SIMPLE_KEYBOARD_EXAMPLE)

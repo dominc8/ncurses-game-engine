@@ -3,15 +3,11 @@
 //
 
 #include "SimpleKeyboardExample.h"
-#include <cstring>
-#include <ctime>
-#include <cstdlib>
 
 SimpleKeyboardExample::SimpleKeyboardExample(int window_width, int window_height)
         : NcursesGameEngine(window_width, window_height) {}
 
 bool SimpleKeyboardExample::onUserCreate() {
-    srand(time(NULL));
 
     int buffer_index = 0;
     for (buffer_index = 0; buffer_index < 1*getWindowWidth(); ++buffer_index) {

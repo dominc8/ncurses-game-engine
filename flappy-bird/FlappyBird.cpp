@@ -2,9 +2,6 @@
 // Created by dominik on 08.07.2019.
 //
 
-#include <cstring>
-#include <ctime>
-#include <cstdlib>
 #include "FlappyBird.h"
 
 FlappyBird::FlappyBird(int window_width, int window_height)
@@ -12,24 +9,25 @@ FlappyBird::FlappyBird(int window_width, int window_height)
     gap_between_obstacles_ = 30;
     gap_inside_obstacle_ = 12;
     horizontal_cycle_ = 0.02f;
-    position_ = getWindowHeight() / 2;
+    position_ = (float)(getWindowHeight()) / 2;
     velocity_ = 0.0f;
     acceleration_ = 0.0f;
     game_lost_ = false;
 }
 
-FlappyBird::~FlappyBird() {
-}
 
 bool FlappyBird::onUserCreate() {
-    srand(time(NULL));
+    std::random_device rd;
+    random_engine_ = std::default_random_engine(rd());
+    distribution_ = std::uniform_int_distribution<int> (-gap_between_obstacles_/3, gap_between_obstacles_/3);
+
     game_lost_ = false;
     for (int i = 0; i < getWindowWidth() * getWindowHeight(); ++i) {
         screen_buffer_[i].ext_color = kColorBlue;
     }
-    obstacles_.emplace_back(getWindowWidth(), rand() % (getWindowHeight() - gap_inside_obstacle_));
+    obstacles_.emplace_back(getWindowWidth(), getWindowHeight()/2 + distribution_(random_engine_));
     for (int i = 1; i < getWindowWidth() / gap_between_obstacles_ + 2; ++i) {
-        obstacles_.emplace_back(getWindowWidth() + i * gap_between_obstacles_, (obstacles_[i-1].second + (rand() % gap_between_obstacles_) - gap_between_obstacles_/2) % (getWindowHeight() - gap_inside_obstacle_));
+        obstacles_.emplace_back(getWindowWidth() + i * gap_between_obstacles_, (obstacles_[i-1].second + distribution_(random_engine_)) % (getWindowHeight() - gap_inside_obstacle_));
     }
     return true;
 }
@@ -62,8 +60,8 @@ bool FlappyBird::onUserUpdate(float elapsed_time) {
     if (position_ < 1)  {
         position_ = 1;
     }
-    if (position_ > getWindowHeight() - 2)  {
-        position_ = getWindowHeight() - 2;
+    if (position_ > (float)(getWindowHeight() - 2))  {
+        position_ = (float)(getWindowHeight() - 2);
         game_lost_ = true;
     }
 
@@ -131,7 +129,7 @@ bool FlappyBird::onUserUpdate(float elapsed_time) {
                 screen_buffer_[row*getWindowWidth() + 2].ext_color = kColorBlue;
             }
             obstacles_.erase(obstacles_.begin());
-            obstacles_.emplace_back(obstacles_.end()->first + gap_between_obstacles_, (obstacles_.end()->second + (rand() % gap_inside_obstacle_) - gap_inside_obstacle_/2) % (getWindowHeight() - gap_inside_obstacle_));
+            obstacles_.emplace_back(obstacles_.end()->first + gap_between_obstacles_, (obstacles_.end()->second + distribution_(random_engine_)) % (getWindowHeight() - gap_inside_obstacle_));
         }
 
         for (auto &obstacle : obstacles_) {
