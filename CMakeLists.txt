@@ -7,6 +7,10 @@ add_executable(SimpleKeyboardExample main.cpp NcursesGameEngine.cpp simple-keybo
 target_compile_definitions(SimpleKeyboardExample PRIVATE SIMPLE_KEYBOARD_EXAMPLE)
 target_link_libraries(SimpleKeyboardExample ncurses)
 
+add_executable(SimpleMouseExample main.cpp NcursesGameEngine.cpp simple-mouse-example/SimpleMouseExample.cpp)
+target_compile_definitions(SimpleMouseExample PRIVATE SIMPLE_MOUSE_EXAMPLE)
+target_link_libraries(SimpleMouseExample ncurses)
+
 add_executable(FlappyBird main.cpp NcursesGameEngine.cpp flappy-bird/FlappyBird.cpp)
 target_compile_definitions(FlappyBird PRIVATE FLAPPY_BIRD)
 target_link_libraries(FlappyBird ncurses)

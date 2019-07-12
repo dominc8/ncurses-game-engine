@@ -9,12 +9,15 @@
 
 NcursesGameEngine::NcursesGameEngine
 (int window_width, int window_height) :
-window_width_(window_width), window_height_(window_height) {
+window_width_(window_width), window_height_(window_height), mouse_position_{0, 0, 0} {
     setlocale(LC_ALL, "");
     initscr();
     cbreak();
     nodelay(stdscr, true);
     noecho();
+    mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
+    mouse_position_ = {0,0, 0};
+    keypad(stdscr, true);
     refresh();
 
     screen_buffer_ = new cchar_t[window_height * window_width];
@@ -36,6 +39,9 @@ window_width_(window_width), window_height_(window_height) {
     for (bool & key_state : key_states_) {
         key_state = false;
     }
+    for (bool & mouse_state : mouse_states_) {
+        mouse_state = false;
+    }
 }
 
 NcursesGameEngine::~NcursesGameEngine() {
@@ -55,7 +61,7 @@ void NcursesGameEngine::start() {
     std::chrono::system_clock::time_point time_point1, time_point2;
     time_point1 = std::chrono::system_clock::now();
     float elapsed_time;
-    char key_input;
+    int key_input;
 
     while(true) {
         time_point2 = std::chrono::system_clock::now();
@@ -80,6 +86,30 @@ void NcursesGameEngine::start() {
                     break;
                 case 'q':
                     key_states_[kKeyQ] = true;
+                    break;
+                case KEY_MOUSE:
+                    MEVENT mouse_event;
+                    if(getmouse(&mouse_event) == OK) {
+                        if(mouse_event.bstate & BUTTON1_PRESSED) {
+                            mouse_states_[kLMBPressed] = true;
+                        }
+                        else if(mouse_event.bstate & BUTTON1_CLICKED) {
+                            mouse_states_[kLMBClicked] = true;
+                        }
+                        else if(mouse_event.bstate & BUTTON1_RELEASED) {
+                            mouse_states_[kLMBReleased] = true;
+                        }
+                        else if(mouse_event.bstate & BUTTON3_PRESSED) {
+                            mouse_states_[kRMBPressed] = true;
+                        }
+                        else if(mouse_event.bstate & BUTTON3_CLICKED) {
+                            mouse_states_[kRMBClicked] = true;
+                        }
+                        else if(mouse_event.bstate & BUTTON3_RELEASED) {
+                            mouse_states_[kRMBReleased] = true;
+                        }
+                        mouse_position_ = {mouse_event.x, mouse_event.y, mouse_event.z};
+                        }
                     break;
             }
         }

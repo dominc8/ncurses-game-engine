@@ -22,6 +22,16 @@ enum KeyStates {
     kKeyStatesCount
 };
 
+enum MouseStates {
+    kLMBPressed = 0,
+    kLMBClicked,
+    kLMBReleased,
+    kRMBPressed,
+    kRMBClicked,
+    kRMBReleased,
+    kMouseStatesCount
+};
+
 enum Colors {
     kColorRed = 1,
     kColorGreen,
@@ -48,6 +58,11 @@ protected:
 
     cchar_t *screen_buffer_;
     bool key_states_[kKeyStatesCount];
+    bool mouse_states_[kMouseStatesCount];
+    struct MousePosition{
+        int x, y, z;
+    } mouse_position_;
+
 
 private:
     int window_width_;
