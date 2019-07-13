@@ -7,6 +7,8 @@
 #include "flappy-bird/FlappyBird.h"
 #elif MAZE_GENERATOR
 #include "maze-generator/MazeGenerator.h"
+#elif SNAKE
+#include "snake/Snake.h"
 #else
 #define NONE
 #endif
@@ -21,6 +23,8 @@ int main(int argc, char *argv[]){
         FlappyBird game(16 * 10, 9 * 3);
 #elif MAZE_GENERATOR
         MazeGenerator game(10,10);
+#elif SNAKE
+        Snake game(20,20);
 #else
 #endif
 #ifndef NONE

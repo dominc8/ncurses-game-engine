@@ -19,6 +19,10 @@ enum KeyStates {
     kKeyD,
     kKeySpace,
     kKeyQ,
+    kKeyUp,
+    kKeyDown,
+    kKeyLeft,
+    kKeyRight,
     kKeyStatesCount
 };
 

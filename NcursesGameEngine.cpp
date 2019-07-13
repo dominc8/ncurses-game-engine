@@ -87,6 +87,18 @@ void NcursesGameEngine::start() {
                 case 'q':
                     key_states_[kKeyQ] = true;
                     break;
+                case KEY_UP:
+                    key_states_[kKeyUp] = true;
+                    break;
+                case KEY_DOWN:
+                    key_states_[kKeyDown] = true;
+                    break;
+                case KEY_LEFT:
+                    key_states_[kKeyLeft] = true;
+                    break;
+                case KEY_RIGHT:
+                    key_states_[kKeyRight] = true;
+                    break;
                 case KEY_MOUSE:
                     MEVENT mouse_event;
                     if(getmouse(&mouse_event) == OK) {
